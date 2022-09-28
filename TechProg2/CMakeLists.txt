@@ -3,4 +3,5 @@ project(TechProg2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(TechProg2 main-zaklad.cpp)
+add_executable(Zak_program main-zaklad.cpp)
+add_executable(p124 "Cv-01/main-p124.cpp")
