@@ -24,7 +24,12 @@ int main() {
     string line;
     string delimiter = " ";
 
+    bool first = true;
     while (getline(cin, line)) {
+        if (!first) {
+            cout << endl;
+        }
+        first = false;
         vector<string> allChar;
         map<string, set<string>* > ruleMap;
         if (line.empty()) {
@@ -33,15 +38,11 @@ int main() {
         naplnVector(line, allChar);
         getline(cin, line);
         naplnMap(line, ruleMap);
-        //spracujVystup(allChar, ruleMap);
+        spracujVystup(allChar, ruleMap);
 
         for (auto item: ruleMap) {
             delete item.second;
         }
-    }
-
-    for (auto item: ruleMap) {
-        delete item.second;
     }
 
     return 0;
@@ -127,7 +128,8 @@ bool rekurzia(string basicString, queue<string> vstup, set<string> used, map<str
 bool checkCharakter(string testCharakter, set<string> used, map<string, set<string> *> &map) {
     bool platne = true;
     //kontrolujem či sa v databáze pravidiel nachádza taký znak
-    if (map.contains(testCharakter)) {
+    //if (map.contains(testCharakter)) { c++ 20 11 čo je na onlinejudge to nemá
+    if (map.find(testCharakter) != map.end()) {
         auto testVector = map.find(testCharakter)->second;
         // ak áno tak testujem či mám dobrý vector
         if (testVector != nullptr) {
@@ -138,7 +140,8 @@ bool checkCharakter(string testCharakter, set<string> used, map<string, set<stri
                     break;
                 }
                 // ak sme použili nejaký charakter ktorý sa mal nachádzať až po tomto tak je to neplatné
-                if (used.contains(overenie)) {
+                //if (used.contains(overenie)) { contians má iba c++ 20 v 11 to nie je
+                if (used.find(overenie) != used.end()) {
                     platne = false;
                 }
             }
@@ -220,7 +223,8 @@ void naplnMap(string line, map<string, set<string>* >& ruleMap) {
         string character2 = line.substr(0, position);
         line.erase(0, position + delimiter.length());
 
-        if (ruleMap.contains(character1)) {
+        //if (ruleMap.contains(character1)) { c++ 20
+        if (ruleMap.find(character1) != ruleMap.end()) {
             auto arrList = ruleMap.at(character1);
             arrList->insert(character2);
         } else {
