@@ -120,10 +120,6 @@ bool rekurzia(string basicString, queue<string> vstup, set<string> used, map<str
 
 /**
  * funkcia testuje či mám správny charakter
- * @param testCharakter
- * @param used
- * @param map
- * @return
  */
 bool checkCharakter(string testCharakter, set<string> used, map<string, set<string> *> &map) {
     bool platne = true;
@@ -151,63 +147,14 @@ bool checkCharakter(string testCharakter, set<string> used, map<string, set<stri
     return platne;
 }
 
-/*
-void rekurzia(string basicString, queue<string> vstup, set<string> used, map<string, set<string> *> &map, int depth,
-              bool firtRun, set<string> *vystup) {
-    if (depth == 4 || vstup.empty()) {
-        vystup->insert(basicString);
-        return;
-    }
-
-    string testCharakter;
-    if (firtRun) {
-        testCharakter = basicString;
-        basicString = "";
-    } else {
-        testCharakter = vstup.front();
-        vstup.pop();
-    }
-
-    bool neplatne = false;
-    if (map.contains(testCharakter)) {
-        auto testVector = map.find(testCharakter)->second;
-        if (testVector != nullptr) {
-            for (auto overenie: *testVector) {
-                if (used.empty()) {
-                    break;
-                }
-                if (used.contains(overenie)) {
-                    neplatne = true;
-                }
-            }
-        }
-    }
-
-    if (neplatne) {
-        //vstup.push(testCharakter);
-        return;
-
-    }
-
-    set<string>
-    rekurzia(basicString + testCharakter, vstup, , map, depth + 1, false, vystup);
-
-
-
-}
-*/
-
-
 void naplnVector(string line, vector<string>& allChar) {
     int position = 0;
     string delimiter = " ";
     while ((position = line.find(delimiter)) != string::npos) {
         string text = line.substr(0, position);
-        // cout << text << endl;
         allChar.push_back(text);
         line.erase(0, position + delimiter.length());
     }
-    //cout << line << endl;
     allChar.push_back(line);
 }
 
@@ -235,8 +182,5 @@ void naplnMap(string line, map<string, set<string>* >& ruleMap) {
 
 
     }
-    //cout << line << endl;
-
-
 }
 
