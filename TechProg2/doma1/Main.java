@@ -1,12 +1,15 @@
 package TechProg2.doma1;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static int[][] array;
+    private static ArrayList<Integer>[] array;
     public static void main (String[] args) {
         int testCase = 1;
         while(true) {
@@ -18,7 +21,7 @@ public class Main {
             boolean loop = true;
 
             // sú o jedno väčšie aby označenie súhlasilo aj so stĺpcom
-            array = new int[numberOfPoints + 1][numberOfPoints + 1];
+            array = new ArrayList[numberOfPoints+1];
 
             while (loop) {
                 int first = scanner.nextInt();
@@ -27,7 +30,13 @@ public class Main {
                     loop = false;
                 }
 
-                array[first][second] = second;
+                if (array[first] == null) {
+                    array[first] = new ArrayList<Integer>();
+                    array[first].add(second);
+                } else {
+                    array[first].add(second);
+                }
+
             }
             // ------------------------------------
 
@@ -63,22 +72,17 @@ public class Main {
         queue.add(startingPoint);
         queue.add(-1);
 
-        // ak sa zo štartovného bodu dá dostať na ďaľšiu úroveň tak môžem pripočítať jednotku k ceste
-        // taktiže môžem pridať aj značku označujúcu novú úroveň
-        // -1 je značka novej úrovne
-//        if (!queue.isEmpty()) {
-//            pathCost++;
-//            queue.add(-1);
-//        }
         //cena aktuálnej úrovne
-        int uroven = pathCost;
+        int uroven = 0;
+
+        //max velkost je 100
+        int[] navstivene = new int[101];
+        //potrebujem naplniť vzialenosti na zapornú hodnotu, čo indikuje že ešte nebolo navštívené
+        Arrays.fill(navstivene, -1);
         while (!queue.isEmpty()) {
 
             int tmpPoint = queue.poll();
-//             ak je oddelovač tak sme sa posunuli na novú úroveň
-//            if (tmpPoint == -1) {
-//                pathCost++;
-//            }
+
 
             // ak je odelovač nie je posledný v queue znamená to že sme aktuálnu úroveň ukončili a prechádzame na novú
             // preto treba označiť že prechadzame na novú úroveň
@@ -86,18 +90,26 @@ public class Main {
                 queue.add(-1);
                 uroven++;
             }
-
-
             // ak spracuvávame pointy
-            if (tmpPoint != -1) {
-                if (uroven > pathCost) {
-                    pathCost = uroven;
-                    fishElement = tmpPoint;
-                }
+            else if (tmpPoint != -1) {
+                // kontrola či z nižšej úrovne viac krát nenachádzama ten istý point
+                if (uroven > navstivene[tmpPoint]) {
 
-                for (int i = 0; i < array[tmpPoint].length; i++) {
-                    if (array[tmpPoint][i] != 0) {
-                        queue.add(array[tmpPoint][i]);
+                    navstivene[tmpPoint] = uroven;
+
+                    if (uroven > pathCost) {
+                        pathCost = uroven;
+                        fishElement = tmpPoint;
+                    } else if (uroven == pathCost && fishElement > tmpPoint) {
+                        fishElement = tmpPoint;
+                    }
+
+                    if (array[tmpPoint] != null) {
+                        for (int i = 0; i < array[tmpPoint].size(); i++) {
+                            if (array[tmpPoint].get(i) != 0) {
+                                queue.add(array[tmpPoint].get(i));
+                            }
+                        }
                     }
                 }
             }
