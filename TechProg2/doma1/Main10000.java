@@ -8,6 +8,7 @@ public class Main10000 {
     private static final Scanner scanner = new Scanner(System.in);
     private static int[][] array;
     public static void main (String[] args) {
+        int testCase = 1;
         while(true) {
             int numberOfPoints = scanner.nextInt();
             if (numberOfPoints == 0) {
@@ -30,43 +31,47 @@ public class Main10000 {
             }
             // ------------------------------------
 
-            prehladavjDoSirky(startingPoint);
+            prehladavjDoSirky(startingPoint, testCase);
 
-            for (int[] ints : array) {
-                for (int i : ints) {
-                    System.out.printf("%d ", i);
-                }
-                System.out.println();
-            }
-            System.out.println();
+//            for (int[] ints : array) {
+//                for (int i : ints) {
+//                    System.out.printf("%d ", i);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
 
+            testCase++;
             //Case 1: The longest path from 1 has length 1, finishing at 2.
             // \n
         }
 
     }
 
-    private static void prehladavjDoSirky(int startingPoint) {
+    private static void prehladavjDoSirky(int startingPoint, int nTestCase) {
         Queue<Integer> queue = new LinkedList<>();
 
         int pathCost = 0;
         //element na ktorom cézar skončil svoju cestu :D
         int fishElement = startingPoint;
-        for (int i = 0; i < array[startingPoint].length; i++) {
-            if (array[startingPoint][i] != 0) {
-                queue.add(array[startingPoint][i]);
-            }
-        }
+//        for (int i = 0; i < array[startingPoint].length; i++) {
+//            if (array[startingPoint][i] != 0) {
+//                queue.add(array[startingPoint][i]);
+//            }
+//        }
+
+        queue.add(startingPoint);
+        queue.add(-1);
 
         // ak sa zo štartovného bodu dá dostať na ďaľšiu úroveň tak môžem pripočítať jednotku k ceste
         // taktiže môžem pridať aj značku označujúcu novú úroveň
         // -1 je značka novej úrovne
-        if (!queue.isEmpty()) {
-            pathCost++;
-            queue.add(-1);
-        }
+//        if (!queue.isEmpty()) {
+//            pathCost++;
+//            queue.add(-1);
+//        }
         //cena aktuálnej úrovne
-        int oldCost = pathCost;
+        int uroven = pathCost;
         while (!queue.isEmpty()) {
 
             int tmpPoint = queue.poll();
@@ -79,28 +84,28 @@ public class Main10000 {
             // preto treba označiť že prechadzame na novú úroveň
             if (tmpPoint == -1 && !queue.isEmpty()) {
                 queue.add(-1);
-                oldCost = pathCost;
+                uroven++;
             }
 
 
             // ak spracuvávame pointy
             if (tmpPoint != -1) {
+                if (uroven > pathCost) {
+                    pathCost = uroven;
+                    fishElement = tmpPoint;
+                }
+
                 for (int i = 0; i < array[tmpPoint].length; i++) {
                     if (array[tmpPoint][i] != 0) {
                         queue.add(array[tmpPoint][i]);
-                        //todo aktuálne mi to zaznamenáva o jednú pozíciu do zadu toto priraďovanie pozicie treba posunúť niekde inde
-                        if (oldCost + 1 > pathCost) {
-                            pathCost = oldCost + 1;
-                        }
                     }
                 }
             }
 
         }
 
-        System.out.println("ZaciatovnyPrvok: " + startingPoint);
-        System.out.println("cena: " + pathCost);
-        System.out.println("koncovy prvok: " + fishElement);
+
+        System.out.printf("Case %d: The longest path from %d has length %d, finishing at %d.\n\n", nTestCase, startingPoint, pathCost, fishElement);
 
 
 
