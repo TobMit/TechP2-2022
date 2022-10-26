@@ -1,13 +1,12 @@
 package TechProg2.doma1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main {
+public class Main10000 {
     private static final Scanner scanner = new Scanner(System.in);
     private static ArrayList<Integer>[] array;
     public static void main (String[] args) {
