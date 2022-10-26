@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main10000 {
+public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static int[][] array;
     public static void main (String[] args) {
