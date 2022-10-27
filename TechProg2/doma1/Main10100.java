@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 
+
+//public class Main10100 {
 public class Main10100 {
     public static void main (String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -39,12 +41,49 @@ public class Main10100 {
                 arrListRow2.add(stringTokenizer2.nextToken());
             }
 
-            int longestMatch = 0;
 
 
-            System.out.printf("%2d. Length of longest match: %d\n", testCase, longestMatch);
+            System.out.printf("%2d. Length of longest match: %d\n", testCase, longestCommonSubsequenceBottomUp(arrListRow1, arrListRow2));
         }
 
+    }
+
+    private static int longestCommonSubsequenceBottomUp(ArrayList<String> arrListRow1, ArrayList<String> arrListRow2) {
+        //inicializacia DP[m+1][n+1], i, j
+        // for (i = 0; i <= m; i++){
+        //      for (j = 0; j <= n; j++){
+        //          if (i == 0 || j == 0)
+        //              DP[i][j] = 0;
+        //          else if (X[i -1] == Y[j -1] )
+        //              DP[i][j] = DP[i -1][j -1] + 1;
+        //          else
+        //              DP[i][j] = max(DP[i -1][j], DP[i][j -1]);
+        //          }
+        //      }
+        //      return DP[m][n];
+
+        int[][] DP = new int[arrListRow1.size() +1 ][arrListRow2.size() + 1];
+
+        for (int i = 0; i <= arrListRow1.size(); i++) {
+            for (int j = 0; j <= arrListRow2.size(); j++) {
+                if (i == 0 || j == 0) {
+                    DP[i][j] = 0;
+                } else if (arrListRow1.get(i - 1).equals(arrListRow2.get(j - 1))) {
+                    DP[i][j] = DP[i - 1][j - 1] + 1;
+                } else {
+                    DP[i][j] = maxValue(DP[i - 1][j], DP [i][j - 1]);
+                }
+            }
+        }
+        return DP[arrListRow1.size()][arrListRow2.size()];
+    }
+
+    private static int maxValue(int i, int j) {
+        if (i >= j) {
+            return i;
+        } else {
+            return j;
+        }
     }
 
 }
