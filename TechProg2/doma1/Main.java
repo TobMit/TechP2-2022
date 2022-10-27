@@ -23,9 +23,7 @@ public class Main {
                 int nBombs = scanner.nextInt();
                 for (int j = 0; j < nBombs; j++) {
                     int columNumber = scanner.nextInt();
-                    if (rowNumber > 0 && rowNumber < nRow && columNumber > 0 && columNumber < nColum ) {
-                        land[rowNumber][columNumber] = true;
-                    }
+                    land[rowNumber][columNumber] = true;
                 }
             }
 
@@ -37,7 +35,7 @@ public class Main {
             //-------------------------- bfs časť ---------------------------------
             boolean found = false;
             //  x y
-            int[][] pohybRobota = new int[][]{{0,1},{1,0}, {0,-1}, {-1,0}};
+            int[][] pohybRobota = new int[][]{{0,1},{1,0},{-1,0}, {0,-1}};
             Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
             queue.add(startingPoint);
             int nSteps = 0;
@@ -48,25 +46,29 @@ public class Main {
                 for (int i = 0; i < qSize; i++) {
                     Pair<Integer, Integer> tmp = queue.poll();
 
+                    // toto som nepobral prečo to musim natvrdo pretipovávať
+                    if ((int)tmp.getRow() == (int)finshPoint.getRow() && (int)tmp.getColumn() == (int)finshPoint.getColumn()) {
+                        found = true;
+                        break;
+                    }
 
-                    if (!land[tmp.row][tmp.column]) {
-                        if (tmp.row == finshPoint.row && tmp.column == finshPoint.column) {
-                            found = true;
-                            break;
-                        }
-                        // prechádzam všetky smeri
-                        for (int[] ints : pohybRobota) {
-                            int newRow = tmp.row + ints[0];
-                            int newColum = tmp.column + ints[1];
+                    // prechádzam všetky smeri
+                    for (int[] ints : pohybRobota) {
+                        int newRow = tmp.row + ints[0];
+                        int newColum = tmp.column + ints[1];
 
-                            // kontrola ohraničenosti
-                            if (newRow < 0 || newColum < 0 || newRow >= nRow || newColum >= nColum) {
-                                continue;
-                            }
-                            queue.add(new Pair<>(newRow, newColum));
-                            // označenie navštívenia
-                            land[tmp.row][tmp.column] = true;
+                        // kontrola ohraničenosti
+                        if (newRow < 0 || newColum < 0 || newRow >= nRow || newColum >= nColum) {
+                            continue;
                         }
+
+                        //kontrola či som už daľší prvok nenaštívil
+                        if (land[newRow][newColum]) {
+                            continue;
+                        }
+                        queue.add(new Pair<>(newRow, newColum));
+                        // označenie že bude naštívený
+                        land[newRow][newColum] = true;
                     }
                 }
 
