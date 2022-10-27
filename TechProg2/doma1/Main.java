@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main10653 {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -22,7 +22,10 @@ public class Main10653 {
                 int rowNumber = scanner.nextInt();
                 int nBombs = scanner.nextInt();
                 for (int j = 0; j < nBombs; j++) {
-                    land[rowNumber][scanner.nextInt()] = true;
+                    int columNumber = scanner.nextInt();
+                    if (rowNumber > 0 && rowNumber < nRow && columNumber > 0 && columNumber < nColum ) {
+                        land[rowNumber][columNumber] = true;
+                    }
                 }
             }
 
@@ -57,7 +60,7 @@ public class Main10653 {
                             int newColum = tmp.column + ints[1];
 
                             // kontrola ohraničenosti
-                            if (newRow < 0 || newColum < 0 || newRow >= nRow || newColum >= nRow) {
+                            if (newRow < 0 || newColum < 0 || newRow >= nRow || newColum >= nColum) {
                                 continue;
                             }
                             queue.add(new Pair<>(newRow, newColum));
