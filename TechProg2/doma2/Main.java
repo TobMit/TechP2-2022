@@ -4,15 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class Main11503 {
+public class Main {
     // <meno , id mena>
     private static HashMap<String, Integer> mena;
     // [0] od kial [1] kam
     private static ArrayList<int[]> pole;
+    private static ArrayList<Integer> kostra;
+    private static ArrayList<Integer> komponent;
+    private static ArrayList<Integer> end;
+    private static ArrayList<Integer> w;
+    private static int pocetHranVKostre;
+    private static ArrayList<Integer> pocetNode;
+
+    private static int uPrvy, vDruhy;
     public static void main(String[] args) throws IOException {
         BufferedReader buffReader = new BufferedReader(new InputStreamReader(System.in));
         int numberOfTestcase = Integer.parseInt(buffReader.readLine());
@@ -20,6 +26,12 @@ public class Main11503 {
             mena = new HashMap<>();
             pole = new ArrayList<>();
             int count = 0;
+            kostra = new ArrayList<>();
+            komponent = new ArrayList<>();
+            end = new ArrayList<>();
+            w = new ArrayList<>();
+            pocetHranVKostre = 0;
+            pocetNode = new ArrayList<>();
             int numberOfFriendships = Integer.parseInt(buffReader.readLine());
             for (int j = 0; j < numberOfFriendships; j++) {
                 String[] tmpMena = buffReader.readLine().split(" ");
@@ -49,43 +61,37 @@ public class Main11503 {
     }
 
     private static int kruskal(int idHladanehoMena) {
-        int [] kostra = new int[mena.size() + 1];
-        int [] komponent = new int[mena.size() + 1];
-        int [] end = new int[mena.size() + 1];
-        int [] w = new int[mena.size() + 1];
-        int pocetHranVKostre = 0;
-        int [] pocetNode = new int[mena.size() + 1];
 
-        int uPrvy, vDruhy;
         // krok 2
-        for (int i = 0; i < mena.size(); i++) {
-            komponent[i] = i;
-            w[i] = 0;
-            end[i] = i;
+        while (komponent.size() < mena.size()) {
+            int komponetSize = komponent.size();
+            komponent.add(komponetSize);
+            w.add(0);
+            end.add(komponetSize);
+            pocetNode.add(0);
         }
-
         // krok 3
-        for (int i = 0; i < pole.size(); i++) {
-            uPrvy = pole.get(i)[0];
-            vDruhy = pole.get(i)[1];
 
-            if (komponent[uPrvy] != komponent[vDruhy]) {
-                pocetHranVKostre++;
-                kostra[pocetHranVKostre] = i;
-                int komponentMax = Math.max(komponent[uPrvy], komponent[vDruhy]);
-                int komponentMin = Math.min(komponent[uPrvy], komponent[vDruhy]);
+        uPrvy = pole.get(pole.size() - 1)[0];
+        vDruhy = pole.get(pole.size() - 1)[1];
 
-                for (int j = komponentMax; w[j] > 0 ; j = w[j]) {
-                    pocetNode[komponent[j]]--;
-                    komponent[j] = komponentMin;
-                    pocetNode[komponentMin]++;
-                }
-                komponent[end[komponentMax]] = komponentMin;
-                pocetNode[komponentMin]++;
-                w[end[komponentMin]] = komponentMax;
-                end[komponentMin] = end[komponentMax];
-                end[komponentMax] = 0;
+        if (komponent.get(uPrvy) != komponent.get(vDruhy)) {
+            pocetHranVKostre++;
+            //kostra.set(pocetHranVKostre, pole.size() - 1);
+            int komponentMax = Math.max(komponent.get(uPrvy), komponent.get(vDruhy));
+            int komponentMin = Math.min(komponent.get(uPrvy), komponent.get(vDruhy));
+
+            for (int j = komponentMax; w.get(j) > 0 ; j = w.get(j)) {
+                pocetNode.set(komponent.get(j), pocetNode.get(komponent.get(j))- 1);
+                komponent.set(j, komponentMin);
+                pocetNode.set(komponentMin, pocetNode.get(komponentMin) + 1);
             }
+            komponent.set(end.get(komponentMax), komponentMin);
+            pocetNode.set(komponentMin, pocetNode.get(komponentMin) + 1);
+            w.set(end.get(komponentMin),komponentMax);
+            end.set(komponentMin, end.get(komponentMax));
+            end.set(komponentMax, 0);
+
 
         }
         /*
@@ -99,6 +105,6 @@ public class Main11503 {
             }
         }
          */
-        return pocetNode[komponent[idHladanehoMena]];
+        return pocetNode.get(komponent.get(idHladanehoMena));
     }
 }
