@@ -23,43 +23,91 @@ public class Main {
         BufferedReader buffReader = new BufferedReader(new InputStreamReader(System.in));
         int numberOfTestcase = Integer.parseInt(buffReader.readLine());
         for (int i = 0; i < numberOfTestcase; i++) {
-            mena = new HashMap<>();
-            pole = new ArrayList<>();
             int count = 0;
+            mena = new HashMap<>();
+            /*
+            pole = new ArrayList<>();
             kostra = new ArrayList<>();
             komponent = new ArrayList<>();
             end = new ArrayList<>();
             w = new ArrayList<>();
-            pocetHranVKostre = 0;
+            pocetHranVKostre = 0;*/
             pocetNode = new ArrayList<>();
+            // na začiatok je kopnutá nula aby som čisloval od 1 a aby mi mohli potom vycházať indexi
+            pocetNode.add(0);
             int numberOfFriendships = Integer.parseInt(buffReader.readLine());
             for (int j = 0; j < numberOfFriendships; j++) {
                 String[] tmpMena = buffReader.readLine().split(" ");
                 int[] tmpVztah = new int[2];
                 // prvý z dvojice
                 if (!mena.containsKey(tmpMena[0])) {
-                    int id = count++;
+                    int id = ++count;
                     mena.put(tmpMena[0], id);
                     tmpVztah[0] = id;
+                    // -- druhy spôsob
+                    pocetNode.add(-1);
                 } else {
                     tmpVztah[0] = mena.get(tmpMena[0]);
                 }
                 // druhý z dvojice
                 if (!mena.containsKey(tmpMena[1])) {
-                    int id = count++;
+                    int id = ++count;
                     mena.put(tmpMena[1], id);
                     tmpVztah[1] = id;
+                    // -- druhy spôsob
+                    pocetNode.add(-1);
                 } else {
                     tmpVztah[1] = mena.get(tmpMena[1]);
                 }
-                pole.add(tmpVztah);
+                //pole.add(tmpVztah);
 
-                System.out.println(kruskal(tmpVztah[1]) + 1);
+                //System.out.println(kruskal(tmpVztah[1]) + 1);
+                // -- druhy spôsob
+                int u = getRoot(mena.get(tmpMena[0]));
+                int v = getRoot(mena.get(tmpMena[1]));
+
+                if (u == v) {
+                    System.out.println(-pocetNode.get(u));
+                } else {
+                    System.out.println(-spoj(u, v));
+                }
             }
             //System.out.println();
         }
     }
+    // ----------------- Druhy spôsob -----------------
 
+    /**
+     * Metóda vráti koreň tejto kostry, čiže várti id pre pocetNode kde sa uchováva hodnota o akutálnom počete node v danej kostre
+     */
+    private static int getRoot(int id) {
+        if (pocetNode.get(id) < 0) {
+            return id;
+        } else {
+            // urychlenie kažý prvok ukazuje na koren, takže netreba dlhú rekurziu ku korenu
+            pocetNode.set(id, getRoot(pocetNode.get(id)));
+            return pocetNode.get(id);
+        }
+    }
+
+    /**
+     * Vytvára "spojenie" každý prvok z kostry odkazuje na root a root držý hodnotu o všetkych prvkoch
+     * hodnota je záporná aby sa jasne identifikovalo čo je id a čo je počet node v koreni
+     */
+    private static int spoj(int idD, int idV) {
+        int x = pocetNode.get(idD) + pocetNode.get(idV);
+        // nahradím jednu z dvoch záporných hodnout na id korena a hodnotu počet node v kostre
+        if (pocetNode.get(idD) > pocetNode.get(idV)) {
+            pocetNode.set(idD, idV);
+            pocetNode.set(idV, x);
+        } else {
+            pocetNode.set(idD, x);
+            pocetNode.set(idV, idD);
+        }
+        return x;
+    }
+
+    //-------------------- Pomale ---------------------
     private static int kruskal(int idHladanehoMena) {
 
         // krok 2
