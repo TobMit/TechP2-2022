@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main {
+public class Main11503 {
     // <meno , id mena>
     private static HashMap<String, Integer> mena;
     // [0] od kial [1] kam
