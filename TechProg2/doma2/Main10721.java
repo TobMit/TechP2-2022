@@ -2,7 +2,7 @@ package TechProg2.doma2;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main10721 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int riadok = 0;
@@ -21,7 +21,7 @@ public class Main {
         // riadky sú počet prvkov
         // stlpce sú širka BarCode
         // vďaka tomuto môžem napočitavať postupne všetky kombinácie od 1 až po požadovanú veľkosť
-        long[][] memorization = new long[8][8];
+        long[][] memorization = new long[51][51];
         // nastavím prvý riadok - na 1 kde to vychýza po širku znaku
         for (int i = 0; i < n && i < m; i++) {
             memorization[0][i] = 1;
