@@ -18,13 +18,13 @@ public class Main10721 {
     }
 
     private static long pocitaj(int n, int k, int m) {
-        // riadky sú počet prvkov
-        // stlpce sú širka BarCode
+        // riadky sú širka BarCode
+        // stlpec sú počet prvkov
         // vďaka tomuto môžem napočitavať postupne všetky kombinácie od 1 až po požadovanú veľkosť
-        long[][] memorization = new long[51][51];
-        // nastavím prvý riadok - na 1 kde to vychýza po širku znaku
+        long[][] memorization = new long[50][50];
+        // nastavím prvý stlpec - na 1 kde to vychýza po širku znaku
         for (int i = 0; i < n && i < m; i++) {
-            memorization[0][i] = 1;
+            memorization[i][0] = 1;
         }
 
         // dynamické programovaine I gess
@@ -34,12 +34,12 @@ public class Main10721 {
             for (int sirkaBarcode = pocetZnakov; sirkaBarcode < n; sirkaBarcode++) {
                 // postupné spočitavanie všetkých možnosti na základe širky znaku kde postupne počitavam všetky možnosti širky znaku o 1 až po širku znaku
                 for (int sirkaZnaku = 1; sirkaZnaku <= m && sirkaZnaku <= sirkaBarcode; sirkaZnaku++) {
-                    memorization[pocetZnakov][sirkaBarcode] += memorization[pocetZnakov - 1][sirkaBarcode - sirkaZnaku];
+                    memorization[sirkaBarcode][pocetZnakov] += memorization[sirkaBarcode - sirkaZnaku][pocetZnakov - 1];
                 }
             }
         }
 
         // musím to posunúť o - 1 aby to fungovalo správne, idem od 0 tak preto musí byť posunúté o - 1
-        return memorization[k - 1][n - 1];
+        return memorization[n - 1][k - 1];
     }
 }
