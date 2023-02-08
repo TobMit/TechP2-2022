@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
+// Zadanie vo filoch alebo (https://github.com/TobMit/TechP2-2022/blob/master/TechProg2/skuskove/prob-Array.pdf)
 public class Array {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

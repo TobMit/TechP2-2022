@@ -1,9 +1,8 @@
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TreeSet;
 
-public class Main725 {
+//https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=666
+public class Main725Division {
 
     // abcde / fghij = N
     public static void main(String[] args) {

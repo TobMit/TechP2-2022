@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+// https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=798
 
-public class Main857 {
+public class Main857Quantiser {
     private static ArrayList<Message> messages;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

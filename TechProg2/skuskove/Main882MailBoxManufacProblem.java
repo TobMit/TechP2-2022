@@ -1,6 +1,7 @@
 import java.util.Scanner;
 // trochu pomoci https://www.ida.liu.se/projects/progcontest/progsm/2002/prognm2002-hints.pdf
-public class Main882 {
+// https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=823
+public class Main882MailBoxManufacProblem {
 
     private static final int MAX_VALUE = 1000000000; // max hodnota 1e9
 

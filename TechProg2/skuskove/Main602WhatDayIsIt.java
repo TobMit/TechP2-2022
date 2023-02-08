@@ -3,7 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main602 {
+// https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=543
+public class Main602WhatDayIsIt {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static final String[] nameOfMonths= {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     // 1.1.0001 bola sobota tak je to posunuté

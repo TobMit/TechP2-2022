@@ -1,6 +1,7 @@
 import java.util.*;
 
-public class Main726 {
+// https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=667
+public class Main726Decode {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         String known = loaderKnown();
