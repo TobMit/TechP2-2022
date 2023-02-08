@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
+// Zadanie vo filoch
 public class Array {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

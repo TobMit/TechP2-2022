@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main726 {
+public class Main726Decode {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         String known = loaderKnown();

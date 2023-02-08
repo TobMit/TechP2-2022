@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main857 {
+public class Main857Quantiser {
     private static ArrayList<Message> messages;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
